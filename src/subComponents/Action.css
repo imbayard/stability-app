@@ -1,0 +1,50 @@
+.action {
+    display: grid;
+    grid-template-rows: auto auto;
+    align-items: center;
+    background-color: #dddddd;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.action-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-name,
+.action-cat,
+.action-points {
+    color: #555555;
+    font-size: 14px;
+    margin: 0;
+}
+
+.action-cat {
+    font-style: italic;
+}
+
+.action-name {
+    font-weight: bolder;
+}
+
+.action-points {
+    font-weight: bold;
+    font-size: large;
+    color: white;
+}
+
+.action-description {
+    display: none;
+    margin-top: 10px;
+    color: #555555;
+    font-size: 12px;
+}
+
+.action.active .action-description {
+    display: block;
+}
