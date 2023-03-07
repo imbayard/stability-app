@@ -4,15 +4,17 @@ import Action from '../subComponents/Action';
 import './HomePage.css'
 import DayMetrics from '../subComponents/HomePage/DayMetrics';
 import ActionCapsule from '../subComponents/HomePage/ActionCapsule';
+import Quote from '../subComponents/HomePage/Quote'
+import SprintMetrics from '../subComponents/HomePage/SprintMetrics';
 
 function HomePage() {
   return (
     <div>
       <div className="user-hud">
-      <div className="todos">
-        <h1>Actions</h1>
-        <ActionCapsule />
-      </div>
+        <div className="todos">
+          <h1>Actions</h1>
+          <ActionCapsule />
+        </div>
         <div className="in-action">
             <h1>{getPrettyDate()}</h1>
             <DayMetrics />
@@ -23,9 +25,10 @@ function HomePage() {
             <Action />
             <Action />
             <Action />
-          </div>
+        </div>
       </div>
-
+      <Quote />
+      <SprintMetrics />
     </div>
   );
 }

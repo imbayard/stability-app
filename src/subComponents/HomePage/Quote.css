@@ -1,0 +1,25 @@
+.quote {
+    width: 100vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 4px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    quotes: "\201C""\201D""\2018""\2019";
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.quote p {
+    font-size: 1.2em;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.quote cite {
+    display: block;
+    font-size: 1em;
+    font-style: normal;
+    margin-top: 0.5em;
+    text-align: center;
+}
