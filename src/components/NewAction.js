@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './NewAction.css';
 
 //sub-components
 import Action from '../subComponents/Action';
+
+//api call
+import { default as getInfoForNewActionPage } from '../lib/page-calls/new-action-api'
 
 function NewActionPage() {
     const [isToggled, setIsToggled] = useState(false);
@@ -12,6 +15,11 @@ function NewActionPage() {
     const handleCategoryChange = (event) => {
         setCategory(event.target.value)
     }
+    const [userInfo, setUserInfo] = useState({})
+
+    useEffect(() => {
+        getInfoForNewActionPage('abc', setUserInfo)
+    }, [])
 
   return (
     <div>
@@ -23,17 +31,17 @@ function NewActionPage() {
         <button className='stable-button' onClick={() => setIsToggled(!isToggled)}>{isToggled ? 'No' : 'Yes'}</button>
         <div className={isToggled ? 'add-action-div active' : 'add-action-div'}>
             <form>
-                <label for="name">Action Name:</label>
-                <input type="text" id="name" name="name" maxlength="20" required />
-                <label for="category">Category:</label>
+                <label htmlFor="name">Action Name:</label>
+                <input type="text" id="name" name="name" maxLength="20" required />
+                <label htmlFor="category">Category:</label>
                 <select id="category" name="category" value={category} onChange={handleCategoryChange} required>
                     <option value="">Select...</option>
                     <option value="body">Body</option> 
                     <option value="mind">Mind</option>
                 </select>
-                <label for="points">Points:</label>
+                <label htmlFor="points">Points:</label>
                 <input type="range" id="points" name="points" min="1" max="5" onChange={(e) => {setPoints(e.target.value)}} required />
-                <output for="points">{points}</output>
+                <output htmlFor="points">{points}</output>
                 <button className="stable-button">Submit</button>
             </form>
         </div>
