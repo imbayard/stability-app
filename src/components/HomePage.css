@@ -1,0 +1,33 @@
+.user-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #f8f8f8;
+    border: 2px solid #eee;
+    border-radius: 4px;
+    padding: 10px;
+    color: #555;
+    width: 100vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+  
+.todos {
+    flex-basis: 25vw;
+}
+  
+.in-action {
+    flex-basis: 75vw;
+}
+  
+h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+}
+  
+h1 span {
+    font-weight: normal;
+    font-size: 14px;
+    display: block;
+}
