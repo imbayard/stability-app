@@ -17,7 +17,7 @@ function HomePage() {
     <div>
       <div className="user-hud">
         <div className="todos">
-          <h1>Actions</h1>
+          <h1>Actions <a href={'http://localhost:3001/new-action'} className='new-action'>New Action</a></h1>
           <ActionCapsule />
         </div>
         <div className="in-action">

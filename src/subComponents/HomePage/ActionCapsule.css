@@ -7,7 +7,7 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 25px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 1px inset rgba(1,1,1,0.05);
   margin-bottom: 5%;
 }
 
@@ -16,7 +16,8 @@
   font-size: 18px;
   margin: 0;
   padding: 10px;
-  background-color: #eee;
+  background-color: #fdfdfd;
+  border-bottom: 2px solid #dddddd;
   border-radius: 25px 25px 0 0;
   text-align: center;
   margin-bottom: 5%;
