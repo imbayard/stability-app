@@ -7,7 +7,7 @@ export default function Header() {
             <h1>Stable.</h1>
             <nav>
                 <ul>
-                <li><a href="http://localhost:3001/" class="home-icon"><span>Home</span></a></li>
+                <li><a href="http://localhost:3001/" className="home-icon"><span>Home</span></a></li>
                 <li><a href="http://localhost:3001/" >Profile</a></li>
                 </ul>
             </nav>

@@ -1,25 +1,42 @@
 import React, {useState, useEffect} from 'react';
 import './NewAction.css';
-
+import { getFunctionalDate } from '../lib/get-date';
 //sub-components
 import Action from '../subComponents/Action';
 
 //api call
-import { default as getInfoForNewActionPage } from '../lib/page-calls/new-action-api'
+import { getInfoForNewActionPage, createNewAction } from '../lib/page-calls/new-action-api'
 
 function NewActionPage() {
     const [isToggled, setIsToggled] = useState(false);
     const [points, setPoints] = useState(undefined)
     const [category, setCategory] = useState("")
-
-    const handleCategoryChange = (event) => {
-        setCategory(event.target.value)
-    }
+    const [name, setName] = useState("")
     const [userInfo, setUserInfo] = useState({})
 
     useEffect(() => {
-        getInfoForNewActionPage('abc', setUserInfo)
+      async function fetchData() {
+        await getInfoForNewActionPage('abc', setUserInfo)
+      }
+      fetchData()
     }, [])
+
+    async function onSubmit(event) {
+      event.preventDefault()
+
+      const action = {
+        name: name, 
+        points: parseInt(points),
+        category: category,
+        timesSet: 0,
+        timesCompleted: 0,
+        completedTimeline: [],
+        createdDate: getFunctionalDate(),
+        deletedDate: null,
+        active: true
+      }
+      await createNewAction('abc', action)
+    }
 
   return (
     <div>
@@ -32,9 +49,9 @@ function NewActionPage() {
         <div className={isToggled ? 'add-action-div active' : 'add-action-div'}>
             <form>
                 <label htmlFor="name">Action Name:</label>
-                <input type="text" id="name" name="name" maxLength="20" required />
+                <input type="text" id="name" name="name" value={name} onChange={(e) => {setName(e.target.value)}} maxLength="20" required />
                 <label htmlFor="category">Category:</label>
-                <select id="category" name="category" value={category} onChange={handleCategoryChange} required>
+                <select id="category" name="category" value={category} onChange={(e) => {setCategory(e.target.value)}} required>
                     <option value="">Select...</option>
                     <option value="body">Body</option> 
                     <option value="mind">Mind</option>
@@ -42,7 +59,7 @@ function NewActionPage() {
                 <label htmlFor="points">Points:</label>
                 <input type="range" id="points" name="points" min="1" max="5" onChange={(e) => {setPoints(e.target.value)}} required />
                 <output htmlFor="points">{points}</output>
-                <button className="stable-button">Submit</button>
+                <button className="stable-button" onClick={(event) => onSubmit(event)}>Submit</button>
             </form>
         </div>
       </div>

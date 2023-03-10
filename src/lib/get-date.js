@@ -7,11 +7,18 @@ export default function getCurrentDate() {
     const month = months[date.getMonth()];
     const dayOfMonth = date.getDate();
     const year = date.getFullYear();
+    const monthNum = date.getMonth()
   
-    return {dayName, month, dayOfMonth, year};
+    return {dayName, month, dayOfMonth, year, monthNum};
 }
 
 export function getPrettyDate() {
     const {dayName, month, dayOfMonth, year} = getCurrentDate()
     return `${dayName} ${month} ${dayOfMonth}, ${year}`
+}
+
+export function getFunctionalDate() {
+    const {dayName, month, dayOfMonth, year, monthNum} = getCurrentDate()
+    console.log(`Happy ${month} ${dayName} :)`)
+    return `${year}-${monthNum}-${dayOfMonth}`
 }
