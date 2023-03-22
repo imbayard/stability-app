@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './NewAction.css';
 import { getFunctionalDate } from '../lib/get-date';
 //sub-components
@@ -6,6 +6,7 @@ import Action from '../subComponents/Action';
 
 //api call
 import { getInfoForNewActionPage, createNewAction } from '../lib/page-calls/new-action-api'
+import { UserInfoContext } from '../App';
 
 function NewActionPage() {
     const [isToggled, setIsToggled] = useState(false);
@@ -13,10 +14,11 @@ function NewActionPage() {
     const [category, setCategory] = useState("")
     const [name, setName] = useState("")
     const [userInfo, setUserInfo] = useState({})
-
+    const { userId, email } = useContext(UserInfoContext)
     useEffect(() => {
       async function fetchData() {
-        await getInfoForNewActionPage('abc', setUserInfo)
+        console.log("User ID", userId)
+        // await getInfoForNewActionPage(userId, setUserInfo)
       }
       fetchData()
     }, [])
@@ -35,7 +37,7 @@ function NewActionPage() {
         deletedDate: null,
         active: true
       }
-      await createNewAction('abc', action)
+      await createNewAction(userId, action)
     }
 
   return (
@@ -68,12 +70,9 @@ function NewActionPage() {
         <div className='two-column'>
             <div className='column'>
                 <h3>Body</h3>
-                <Action />
             </div>
             <div className='column'>
                 <h3>Mind</h3>
-                <Action />
-                <Action />
             </div>
         </div>
       </div>

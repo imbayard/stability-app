@@ -27,3 +27,15 @@
   margin: 0;
   padding: 0;
 }
+
+.create-new-action-prompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border: 1px solid #ccc;
+}
+
+.create-new-action-prompt p {
+  text-align: center;
+}

@@ -46,10 +46,14 @@ h1 span {
     background-color: #555;
     border-radius: 10px;
     color: white;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
     padding: 2%;
+    width: 50%;
+    margin: auto;
 }
 
 .new-action:hover {
     color: #2ecc71;
+    cursor: pointer;
+    background-color: #333
 }
