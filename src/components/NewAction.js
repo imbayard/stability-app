@@ -18,6 +18,7 @@ function NewActionPage() {
     useEffect(() => {
       async function fetchData() {
         console.log("User ID", userId)
+        console.log(await getInfoForNewActionPage(userId, setUserInfo))
         // await getInfoForNewActionPage(userId, setUserInfo)
       }
       fetchData()
