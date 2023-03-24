@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './NewAction.css';
 import { getFunctionalDate } from '../lib/get-date';
-//sub-components
-import Action from '../subComponents/Action';
 
 //api call
 import { getInfoForNewActionPage, createNewAction } from '../lib/page-calls/new-action-api'
 import { UserInfoContext } from '../App';
+import { Navigate } from 'react-router-dom';
 
 function NewActionPage() {
     const [isToggled, setIsToggled] = useState(false);
@@ -15,6 +14,7 @@ function NewActionPage() {
     const [name, setName] = useState("")
     const [userInfo, setUserInfo] = useState({})
     const { userId, email } = useContext(UserInfoContext)
+    const [backHome, setBackHome] = useState(false)
     useEffect(() => {
       async function fetchData() {
         console.log("User ID", userId)
@@ -39,6 +39,7 @@ function NewActionPage() {
         active: true
       }
       await createNewAction(userId, action)
+      setBackHome(true)
     }
 
   return (
@@ -66,17 +67,7 @@ function NewActionPage() {
             </form>
         </div>
       </div>
-      <div className='new-action-div'>
-        <h1 className='new-action-head'>Your Current Actions</h1>
-        <div className='two-column'>
-            <div className='column'>
-                <h3>Body</h3>
-            </div>
-            <div className='column'>
-                <h3>Mind</h3>
-            </div>
-        </div>
-      </div>
+      {backHome && <Navigate to='/' />}
     </div>
   );
 }
