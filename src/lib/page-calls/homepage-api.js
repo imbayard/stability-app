@@ -12,3 +12,16 @@ export async function getActions(userId, setActions) {
             setActions(response.data.data.userInfo.actions)
         })
 }
+
+export async function getTodayActions(userId, setActionsToday) {
+    const opts = getDefaultOpts()
+    opts.data.query = 'query Query ($userInfoId: String!) { userInfo(id: $userInfoId) { actions { active category name points } } }'
+    opts.data.variables = {userInfoId: userId}
+
+    return axios.request(opts)
+        .then(function (response) {
+            const actions = response.data.data.userInfo.actions.filter(action => action.active)
+            setActionsToday(actions)
+            return(actions)
+        })
+}
