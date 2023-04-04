@@ -9,6 +9,7 @@ import ActionInstance from '../subComponents/HomePage/ActionInstance';
 import { Navigate } from 'react-router-dom';
 import { UserInfoContext } from '../App';
 import { getTodayActions } from '../lib/page-calls/homepage-api';
+import { determineIntensity, mapActionsToTotals } from '../lib/homepage/homepage-utils';
 
 function HomePage() {
   useEffect(() => {
@@ -32,20 +33,12 @@ function HomePage() {
   };
 
   const updateDayContext = (actions) => {
-    let sumPoints = 0
-    let numMind = 0
-    let numBody = 0
-    actions.forEach(action => {
-      // Update Points
-      sumPoints = sumPoints + action.points
-      // Update Balance
-      numMind = numMind + ((action.category === 'mind') ? 1 : 0)
-      numBody = numBody + ((action.category === 'body') ? 1 : 0)
-    })
+    const {points, numMind, numBody} = mapActionsToTotals(actions)
     setDayContext((prevContext) => ({
       ...prevContext,
-      points: sumPoints,
-      balance: `${numMind} : ${numBody}`
+      points,
+      balance: `${numMind} : ${numBody}`,
+      intensity: determineIntensity(points)
     }));
   }
 
@@ -83,7 +76,7 @@ function HomePage() {
                 return(
                   <ActionInstance action={action} key={action.name}/>
                 )
-              }) : <></>
+              }) : <h1>Add Actions From The Left</h1>
               }
             </div>
         </div>
