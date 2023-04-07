@@ -5,11 +5,12 @@ import DayMetrics from '../subComponents/HomePage/DayMetrics';
 import ActionCapsule from '../subComponents/HomePage/ActionCapsule';
 import Quote from '../subComponents/HomePage/Quote'
 import SprintMetrics from '../subComponents/HomePage/SprintMetrics';
-import ActionInstance from '../subComponents/HomePage/ActionInstance';
 import { Navigate } from 'react-router-dom';
 import { UserInfoContext } from '../App';
 import { getTodayActions } from '../lib/page-calls/homepage-api';
 import { determineIntensity, mapActionsToTotals } from '../lib/homepage/homepage-utils';
+import ActionsToday from '../subComponents/HomePage/TodaysActions';
+import { v4 as uuidv4 } from 'uuid'
 
 function HomePage() {
   useEffect(() => {
@@ -23,7 +24,7 @@ function HomePage() {
   const handleDrop = async (e) => {
     e.preventDefault();
     const action = JSON.parse(e.dataTransfer.getData('application/json'));
-    const actions = [...actionsToday, action]
+    const actions = [...actionsToday, action].map(action => ({...action, id: uuidv4()}))
     setActionsToday(actions)
     updateDayContext(actions)
   };
@@ -32,13 +33,19 @@ function HomePage() {
     e.preventDefault();
   };
 
+  const handleActionsTodayChange = (updatedActions) => {
+    updateDayContext(updatedActions)
+    setActionsToday(updatedActions)
+  }
+
   const updateDayContext = (actions) => {
-    const {points, numMind, numBody} = mapActionsToTotals(actions)
+    const {points, numMind, numBody, completed, total} = mapActionsToTotals(actions)
     setDayContext((prevContext) => ({
       ...prevContext,
       points,
       balance: `${numMind} : ${numBody}`,
-      intensity: determineIntensity(points)
+      intensity: determineIntensity(points),
+      completed: `${completed}/${total}`
     }));
   }
 
@@ -70,14 +77,10 @@ function HomePage() {
               onDrop={handleDrop}
               onDragOver={handleDragOver}
             >
-              { 
-              actionsToday? 
-              actionsToday.map(action => {
-                return(
-                  <ActionInstance action={action} key={action.name}/>
-                )
-              }) : <h1>Add Actions From The Left</h1>
-              }
+              <ActionsToday 
+                actionsToday={actionsToday}
+                onActionsTodayChange={handleActionsTodayChange}
+              />
             </div>
         </div>
       </div>

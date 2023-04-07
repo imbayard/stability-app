@@ -22,12 +22,15 @@ export async function getTodayActions(userId, setActionsToday) {
         .then(async function (response) {
             const today = response.data.data.userInfo.today
             let actions = []
+            let completed = []
             if(!today) {
                 console.log("First log in of day... setting day.")
                 await updateDay(userId, [], [], 0, 0)
             } else {
-                actions = today.actionsSet
+                actions = today.actionsSet.map(action => ({...action, completed: false}))
+                completed = today.actionsComplete.map(action => ({...action, completed: true}))
             }
+            actions = actions.concat(completed)
             setActionsToday(actions)
             return(actions)
         })

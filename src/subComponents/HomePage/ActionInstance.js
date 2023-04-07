@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 
 import './ActionInstance.css'
 
-export default function ActionInstance({action}) {
+export default function ActionInstance({action, onActionChange}) {
 
     const [actionClicked, clickAction] = useState(false)
 
     function handleClick() {
         clickAction(!actionClicked)
+        action.completed = !action.completed
+        onActionChange(action)
     }
     const fancyGreen = '#2ecc71'
     const textStyle =  actionClicked?
