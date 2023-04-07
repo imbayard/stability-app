@@ -18,7 +18,6 @@ export async function createNewAction(userId, action) {
     opts.data.query = 'mutation Mutation($userId: String!, $action: ActionInput!) { createNewAction(userId: $userId, action: $action) }'
     console.log(`Creating new action for ${userId}`)
     opts.data.variables = {userId, action}
-    console.log("MAKING REQUEST...")
     return axios.request(opts)
         .then(function (response) {
             console.log(response.data)

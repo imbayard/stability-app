@@ -1,5 +1,6 @@
 import axios from 'axios'
 import getDefaultOpts from './axios-opts'
+import { v4 as uuidv4 } from 'uuid'
 
 export async function getActions(userId, setActions) {
     const opts = getDefaultOpts()
@@ -30,7 +31,7 @@ export async function getTodayActions(userId, setActionsToday) {
                 actions = today.actionsSet.map(action => ({...action, completed: false}))
                 completed = today.actionsComplete.map(action => ({...action, completed: true}))
             }
-            actions = actions.concat(completed)
+            actions = actions.concat(completed).map(action => ({...action, id: uuidv4()}))
             setActionsToday(actions)
             return(actions)
         })

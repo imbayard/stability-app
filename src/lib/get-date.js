@@ -19,6 +19,6 @@ export function getPrettyDate() {
 
 export function getFunctionalDate() {
     const {dayName, month, dayOfMonth, year, monthNum} = getCurrentDate()
-    console.log(`Happy ${month} ${dayName} :)`)
+    console.log(`Hope you're having a nice ${month} :)`)
     return `${year}-${monthNum}-${dayOfMonth}`
 }

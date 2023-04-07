@@ -4,7 +4,7 @@ import './ActionInstance.css'
 
 export default function ActionInstance({action, onActionChange}) {
 
-    const [actionClicked, clickAction] = useState(false)
+    const [actionClicked, clickAction] = useState(action.completed)
 
     function handleClick() {
         clickAction(!actionClicked)

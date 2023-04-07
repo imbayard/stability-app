@@ -7,7 +7,7 @@ import Quote from '../subComponents/HomePage/Quote'
 import SprintMetrics from '../subComponents/HomePage/SprintMetrics';
 import { Navigate } from 'react-router-dom';
 import { UserInfoContext } from '../App';
-import { getTodayActions } from '../lib/page-calls/homepage-api';
+import { getTodayActions, updateDay } from '../lib/page-calls/homepage-api';
 import { determineIntensity, mapActionsToTotals } from '../lib/homepage/homepage-utils';
 import ActionsToday from '../subComponents/HomePage/TodaysActions';
 import { v4 as uuidv4 } from 'uuid'
@@ -16,6 +16,7 @@ function HomePage() {
   useEffect(() => {
     async function fetchData() {
       const actions = await getTodayActions(userId, setActionsToday)
+      setActionsTruth(actions)
       updateDayContext(actions)
     }
     fetchData()
@@ -30,7 +31,7 @@ function HomePage() {
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault();
+    e.preventDefault()
   };
 
   const handleActionsTodayChange = (updatedActions) => {
@@ -38,7 +39,7 @@ function HomePage() {
     setActionsToday(updatedActions)
   }
 
-  const updateDayContext = (actions) => {
+  const updateDayContext = (actions) => { 
     const {points, numMind, numBody, completed, total} = mapActionsToTotals(actions)
     setDayContext((prevContext) => ({
       ...prevContext,
@@ -49,9 +50,26 @@ function HomePage() {
     }));
   }
 
+  const handleSave = async (event) => {
+    event.preventDefault()
+
+    setSaveButtonLoading(true)
+    const actionsSet = actionsToday.filter(action => !action.completed).map(action => ({name: action.name, points: action.points, category: action.category}))
+    const actionsComplete = actionsToday.filter(action => action.completed).map(action => ({name: action.name, points: action.points, category: action.category}))
+
+    try{
+      await updateDay(userId, actionsSet, actionsComplete, dayContext.points, 0)
+    } catch (err) {
+      console.log(err)
+    }
+    setSaveButtonLoading(false)
+  }
+
   const {userId, email} = useContext(UserInfoContext)
   const [redirect, setRedirect] = useState(false)
+  const [saveButtonLoading, setSaveButtonLoading] = useState(false)
   const [actionsToday, setActionsToday] = useState([])
+  const [actionsTruth, setActionsTruth] = useState([])
   const [dayContext, setDayContext] = useState({
     points: 0,
     completed: '0/0',
@@ -68,6 +86,7 @@ function HomePage() {
           <ActionCapsule 
             userId={userId}
           />
+
         </div>
         <div className="in-action">
             <h1>{getPrettyDate()}</h1>
@@ -81,6 +100,11 @@ function HomePage() {
                 actionsToday={actionsToday}
                 onActionsTodayChange={handleActionsTodayChange}
               />
+              {actionsTruth !== actionsToday && (
+                <button onClick={handleSave} style={{fontSize: 'large'}}>
+                  {saveButtonLoading ? 'Saving...' : 'Save'}
+                </button>
+              )}
             </div>
         </div>
       </div>
@@ -91,4 +115,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default HomePage
